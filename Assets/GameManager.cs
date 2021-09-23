@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
         camZ=transform.position.z;
 
         //Crea plataformas
-        AnadePlataformas(20, -5f);
+        AnadePlataformas(10, -5f);
         
     }
 
@@ -34,25 +34,29 @@ public class GameManager : MonoBehaviour
         transform.position+=(destino-transform.position)*Time.deltaTime*3f;
     }
 
-    void AnadePlataformas (int cantidad, float base_, float altura=20f) {
+    void AnadePlataformas (int cantidadPorTramo, float base_, int tramos=2) {
         float halfAncho=plataforma.transform.localScale.x/2f;
         float halfAlto=plataforma.transform.localScale.y/2f;
 
-        for (int i=0; i<cantidad; i++) {
-            Vector2 pos=new Vector2(Random.Range(-9f+halfAncho, 9f-halfAncho), Random.Range(base_+1.25f+halfAlto, altura-halfAlto));
-            GameObject plat=Instantiate<GameObject>(plataforma, pos, Quaternion.identity);
-            List<Collider2D> colliders=new List<Collider2D>();
-            int plts=plat.GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D().NoFilter(), colliders);
-            for (int j=0; j<plts; j++)
-                if (colliders[j].tag=="Plataforma") {
-                    Destroy(plat);
-                    return;
-                }
-            if (pos.y>plataformaMasAlta)
-                plataformaMasAlta=pos.y;
+        //Siempre debe haber una plataforma por cada 10 de altura para que siempre haya una visible
+        //en pantalla en todo momento, por lo que voy a partir la instanciación en trozos de a 10.
+        for (int tramo=0; tramo<tramos; tramo++) {
+            for (int i=0; i<cantidadPorTramo; i++) {
+                Vector2 pos=new Vector2(Random.Range(-9f+halfAncho, 9f-halfAncho), Random.Range(base_+tramo*10f+1.25f+halfAlto, base_+(tramo+1)*10f-halfAlto));
+                GameObject plat=Instantiate<GameObject>(plataforma, pos, Quaternion.identity);
+                List<Collider2D> colliders=new List<Collider2D>();
+                int plts=plat.GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D().NoFilter(), colliders);
+                for (int j=0; j<plts; j++)
+                    if (colliders[j].tag=="Plataforma") {
+                        Destroy(plat);
+                        continue;
+                    }
+                if (pos.y>plataformaMasAlta)
+                    plataformaMasAlta=pos.y;
 
-            //No vamos a reinstanciar indefinidamente las plataformas hasta dar con lugares donde no solapen a otras
-            //porque así tendremos más variabilidad a costa de ningún recurso más
+                //No vamos a reinstanciar indefinidamente las plataformas hasta dar con lugares donde no solapen a otras
+                //porque así tendremos más variabilidad a costa de ningún recurso más
+            }
         }
     }
 }
