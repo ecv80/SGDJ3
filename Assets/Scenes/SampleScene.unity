@@ -302,6 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36033ab5f3742b566bba544b7bdae51e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prota: {fileID: 512342214}
   plataforma: {fileID: 8345349855901765768, guid: 23dcd7ab408325e73a136cc2ea60d288,
     type: 3}
 --- !u!20 &519420031
