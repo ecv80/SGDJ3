@@ -7,42 +7,16 @@ public class Disparo : MonoBehaviour
     public GameObject eslabon=null;
 
     bool disparando=false;
-    int disparo=0;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Llena diagonal pantalla de eslabones
-        if (eslabon==null)
-            return;
-        
-        Vector2 maxCoords=new Vector2(9f,5f);
-        Vector2 minCoords=new Vector2(-9f,-5f);
-
-        StartCoroutine(Dispara(minCoords, maxCoords));
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (disparando==false)
-            switch(disparo) {
-                case 0:
-                    StartCoroutine(Dispara(new Vector2(-9f, -5f), new Vector2(9f, -5f)));
-                    disparo++;
-                    break;
-                case 1:
-                    StartCoroutine(Dispara(new Vector2(-9f, -5f), new Vector2(-9f, 5f)));
-                    disparo++;
-                    break;
-                case 2:
-                    StartCoroutine(Dispara(new Vector2(9f, 5f), new Vector2(-9f, 5f)));
-                    disparo++;
-                    break;
-                default:
-                    break;
-            }
 
         //Input
         if (Input.GetButtonDown("Fire1"))
@@ -50,12 +24,14 @@ public class Disparo : MonoBehaviour
             Vector3 mousePos = Input.mousePosition;
             Vector3 mouseWorldPos=Camera.main.ScreenToWorldPoint(mousePos);
 
-            StartCoroutine(Dispara(new Vector2(0f, -5f), mouseWorldPos));
+            StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), mouseWorldPos));
         }
         
     }
 
     IEnumerator Dispara (Vector2 origen, Vector2 destino, int eslabonesPorFrame=10) {
+        if (eslabon==null) //asi no
+            yield break;
         if (disparando) //ignorar
             yield break;
         disparando=true;
