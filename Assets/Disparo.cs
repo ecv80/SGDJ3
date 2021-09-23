@@ -43,6 +43,15 @@ public class Disparo : MonoBehaviour
                 default:
                     break;
             }
+
+        //Input
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Vector3 mousePos = Input.mousePosition;
+            Vector3 mouseWorldPos=Camera.main.ScreenToWorldPoint(mousePos);
+
+            StartCoroutine(Dispara(new Vector2(0f, -5f), mouseWorldPos));
+        }
         
     }
 
