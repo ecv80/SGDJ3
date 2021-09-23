@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Disparo : MonoBehaviour
+public class Prota : MonoBehaviour
 {
     public GameObject eslabon=null;
 
     bool disparando=false;
+    bool subiendo=false;
+    bool match=false;
+    Vector2 matchAt;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +20,11 @@ public class Disparo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (match) {
+            if (!subiendo)
+                StartCoroutine(SubeCadena(transform.position, matchAt));
+            return;
+        }
 
         //Input
         if (Input.GetButtonDown("Fire1"))
@@ -64,8 +72,47 @@ public class Disparo : MonoBehaviour
         // print(contador+" eslabones.");
 
         disparando=false;
+        matchAt=destino;
+        match=true;
         yield break;
     }
+
+    IEnumerator SubeCadena (Vector2 origen, Vector2 destino) {
+        if (subiendo)
+            yield break;
+        subiendo=true;
+
+        Vector2 pos=origen;
+        Vector2 angulo=(destino-origen).normalized;
+        
+        float lastDiff=(destino-pos).sqrMagnitude;
+        while (true) {
+            pos+=angulo*Time.deltaTime*20f; //Parece que a veces cuando el prota se pasa del limite de destino, aparece brevemente en pantalla, aunque no deberia...
+
+            if ((destino-pos).sqrMagnitude>lastDiff) //que nos pasamos de vueltas
+                pos=destino;
+            
+            transform.position=pos;
+
+            if (pos==destino)
+                break;
+
+            lastDiff=(destino-pos).sqrMagnitude;       
+
+            yield return 0;
+
+        } //while (lastDiff>(lastDiff=(destino-pos).sqrMagnitude));
+
+        match=false;
+        subiendo=false;
+        yield break;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Destroy(other.gameObject);
+    }
+
 
     
 }
