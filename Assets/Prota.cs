@@ -110,7 +110,8 @@ public class Prota : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Destroy(other.gameObject);
+        if (other.tag=="Eslabon")
+            Destroy(other.gameObject);
     }
 
 
