@@ -7,7 +7,7 @@ public class MonoCabron : MonoBehaviour
     public GameObject coco;
 
     float ultimoCocoT;
-    float cadenciaTiradaCocos=3f;
+    float cadenciaTiradaCocos=5f;
 
     // Start is called before the first frame update
     void Start()
@@ -29,23 +29,30 @@ public class MonoCabron : MonoBehaviour
                 ultimoCocoT=Time.time;
 
                 //TO-DO:
-                //3. lanzar rachas de varios cocos por tirada
                 //4. morir por cocazo
 
-                //Lanzar en direcciones inexactas
-                float toleranciaAngulo=30f; //Desvío de +- toleranciaAngulo
-                Vector2 destinoOriginal=GameManager.instancia.prota.transform.position;
+                LanzaCoco();
+                float retraso2aTirada=Random.Range(cadenciaTiradaCocos/6f, cadenciaTiradaCocos/3f);
+                Invoke("LanzaCoco", retraso2aTirada);
+                Invoke("LanzaCoco", retraso2aTirada+Random.Range(cadenciaTiradaCocos/6f, cadenciaTiradaCocos/3f));
 
-                Vector2 destino=destinoOriginal-(Vector2)transform.position;
-                destino=Quaternion.Euler(0f, 0f, Random.Range(-toleranciaAngulo, toleranciaAngulo))*destino;
-                destino=(Vector2)transform.position+destino;
-
-                GameObject cocoInstance=Instantiate<GameObject>(coco, transform.position, Quaternion.identity);
-                Coco c=cocoInstance.GetComponent<Coco>();
-                c.direccion=(destino-(Vector2)transform.position).normalized; //Somewhere p'ahi_p'allá (la i sin tilde)
-                c.velocidad=Random.Range(2f, 10f);
             }
         }
+    }
+
+    void LanzaCoco() {
+        //Lanzar en direcciones inexactas
+        float toleranciaAngulo=30f; //Desvío de +- toleranciaAngulo
+        Vector2 destinoOriginal=GameManager.instancia.prota.transform.position;
+
+        Vector2 destino=destinoOriginal-(Vector2)transform.position;
+        destino=Quaternion.Euler(0f, 0f, Random.Range(-toleranciaAngulo, toleranciaAngulo))*destino;
+        destino=(Vector2)transform.position+destino;
+
+        GameObject cocoInstance=Instantiate<GameObject>(coco, transform.position, Quaternion.identity);
+        Coco c=cocoInstance.GetComponent<Coco>();
+        c.direccion=(destino-(Vector2)transform.position).normalized; //Somewhere p'ahi_p'allá (la i sin tilde)
+        c.velocidad=Random.Range(2f, 8f);
     }
 
 }
