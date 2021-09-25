@@ -27,6 +27,11 @@ public class Prota : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!efectoInvulnerable) { //Muerte?
+            if (GameManager.instancia.agua.transform.position.y+10f>transform.position.y+protaHalfAlto+.5f) { //Ahogado
+                GameManager.instancia.gameOverText.gameObject.SetActive(true);
+            }
+        }
 
         if (!disparando && match) {
             if (!subiendo)

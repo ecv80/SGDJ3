@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public Prota prota;
     public Agua agua;
+    public TextMeshProUGUI gameOverText;
 
     public GameObject plataforma;
 
