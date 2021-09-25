@@ -28,14 +28,21 @@ public class MonoCabron : MonoBehaviour
                 ultimoCocoT=Time.time;
 
                 //TO-DO:
-                //1. lanzar en direcciones inexactas
                 //2. lanzar con velocidades variables
                 //3. lanzar rachas de varios cocos por tirada
                 //4. morir por cocazo
 
+                //Lanzar en direcciones inexactas
+                float toleranciaAngulo=30f; //Desvío de +- toleranciaAngulo
+                Vector2 destinoOriginal=GameManager.instancia.prota.transform.position;
+
+                Vector2 destino=destinoOriginal-(Vector2)transform.position;
+                destino=Quaternion.Euler(0f, 0f, Random.Range(-toleranciaAngulo, toleranciaAngulo))*destino;
+                destino=(Vector2)transform.position+destino;
+
                 GameObject cocoInstance=Instantiate<GameObject>(coco, transform.position, Quaternion.identity);
                 Coco c=cocoInstance.GetComponent<Coco>();
-                c.destino=GameManager.instancia.prota.transform.position; //Somewhere over the rainbow
+                c.destino=destino; //Somewhere p'ahi_p'allá (la i sin tilde)
                 c.velocidad=5f;
             }
         }
