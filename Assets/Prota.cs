@@ -30,9 +30,17 @@ public class Prota : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             Vector3 mousePos = Input.mousePosition;
-            Vector3 mouseWorldPos=Camera.main.ScreenToWorldPoint(mousePos);
+            Vector3 mouseWorldPos=Camera.main.ScreenToWorldPoint(mousePos);         
 
-            StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), mouseWorldPos));
+            RaycastHit2D hit = Physics2D.Raycast( mouseWorldPos, Vector2.zero );
+            if (!hit.collider) { //Disparo al aire
+                StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), mouseWorldPos));
+            }
+            else {
+                if (hit.collider.tag=="Plataforma") {
+                    StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), hit.transform.position));
+                }
+            }
         }
         
     }
