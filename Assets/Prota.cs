@@ -20,7 +20,8 @@ public class Prota : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (match) {
+
+        if (!disparando && match) {
             if (!subiendo)
                 StartCoroutine(SubeCadena(transform.position, matchAt));
             return;
@@ -38,7 +39,10 @@ public class Prota : MonoBehaviour
             }
             else {
                 if (hit.collider.tag=="Plataforma") {
-                    StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), hit.transform.position));
+                    //Aquí irían comprobaciones de que es la plataforma correcta
+                    matchAt=hit.transform.position;
+                    match=true;
+                    StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), matchAt));
                 }
             }
         }
@@ -80,8 +84,6 @@ public class Prota : MonoBehaviour
         // print(contador+" eslabones.");
 
         disparando=false;
-        matchAt=destino;
-        match=true;
         yield break;
     }
 
