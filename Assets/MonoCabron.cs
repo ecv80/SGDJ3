@@ -28,7 +28,6 @@ public class MonoCabron : MonoBehaviour
                 ultimoCocoT=Time.time;
 
                 //TO-DO:
-                //2. lanzar con velocidades variables
                 //3. lanzar rachas de varios cocos por tirada
                 //4. morir por cocazo
 
@@ -43,7 +42,7 @@ public class MonoCabron : MonoBehaviour
                 GameObject cocoInstance=Instantiate<GameObject>(coco, transform.position, Quaternion.identity);
                 Coco c=cocoInstance.GetComponent<Coco>();
                 c.destino=destino; //Somewhere p'ahi_p'allá (la i sin tilde)
-                c.velocidad=5f;
+                c.velocidad=Random.Range(1f, 10f);
             }
         }
     }
