@@ -29,6 +29,7 @@ public class Prota : MonoBehaviour
     {
         if(!efectoInvulnerable) { //Muerte?
             if (GameManager.instancia.agua.transform.position.y+10f>transform.position.y+protaHalfAlto+.5f) { //Ahogado
+                GameManager.instancia.gameOverText.text="AHOGADO";
                 GameManager.instancia.gameOverText.gameObject.SetActive(true);
             }
         }
@@ -156,6 +157,11 @@ public class Prota : MonoBehaviour
             yield return 0;
         }
         tiempoInvulnerable=1f;
+        GameManager.instancia.plataformasPorSubir--;
+        if (GameManager.instancia.plataformasPorSubir<=0) {//Hemos ganado?
+            GameManager.instancia.gameOverText.text="¡BRAVO!";
+            GameManager.instancia.gameOverText.gameObject.SetActive(true);
+        }
 
         match=false;
         subiendo=false;

@@ -400,7 +400,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 327754e9375019f028f85a0a4d48c463, type: 3}
   m_Color: {r: 1, g: 0.883, b: 0.78431374, a: 1}
   m_FlipX: 0
@@ -529,8 +529,11 @@ MonoBehaviour:
   prota: {fileID: 512342217}
   agua: {fileID: 1555068184}
   gameOverText: {fileID: 403578404}
+  monoCabron: {fileID: 8586760390470216131, guid: b00d273b7315e3894b5c3d9fbf67c81a,
+    type: 3}
   plataforma: {fileID: 8345349855901765768, guid: 23dcd7ab408325e73a136cc2ea60d288,
     type: 3}
+  plataformasPorSubir: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -643,7 +646,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1000
   m_Sprite: {fileID: 21300000, guid: 327754e9375019f028f85a0a4d48c463, type: 3}
   m_Color: {r: 0, g: 0.78541684, b: 1, a: 0.4745098}
   m_FlipX: 0

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public Agua agua;
     public TextMeshProUGUI gameOverText;
 
+    public GameObject monoCabron;
     public GameObject plataforma;
 
     float camZ;
@@ -16,6 +17,9 @@ public class GameManager : MonoBehaviour
     Vector2 plataformaMasAlta=new Vector2(0f, -5f);
     Vector2 plataformaMasDcha=new Vector2(20f, -5f);
     Vector2 plataformaMasIzqda=new Vector2(-20f, -5f);
+
+    public int plataformasPorSubir=0;
+
 
     public static GameManager instancia=null;
 
@@ -35,6 +39,8 @@ public class GameManager : MonoBehaviour
 
         //Crea plataformas
         AnadePlataformas(20, prota.transform.position);
+
+        plataformasPorSubir=10;
         
     }
 
@@ -88,17 +94,27 @@ public class GameManager : MonoBehaviour
                 GameObject plat=Instantiate<GameObject>(plataforma, pos, Quaternion.identity);
                 List<Collider2D> colliders=new List<Collider2D>();
                 int plts=plat.GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D().NoFilter(), colliders);
+                bool sigue=false;
                 for (int j=0; j<plts; j++)
                     if (colliders[j].tag=="Plataforma") {
                         Destroy(plat);
-                        continue;
+                        sigue=true;
+                        break;
                     }
+                if (sigue)
+                    continue;
+
                 if (pos.y>plataformaMasAlta.y)
                     plataformaMasAlta=pos;
                 if (pos.x>plataformaMasDcha.x)
                     plataformaMasDcha=pos;
                 if (pos.x<plataformaMasIzqda.x)
                     plataformaMasIzqda=pos;
+
+                //Poner a un mono cabron?
+                if (Random.value<1f/20f) {
+                    Instantiate<GameObject>(monoCabron, new Vector2(pos.x, pos.y+halfAlto+monoCabron.transform.localScale.y/2f), Quaternion.identity);
+                }
                     
 
                 //No vamos a reinstanciar indefinidamente las plataformas hasta dar con lugares donde no solapen a otras
