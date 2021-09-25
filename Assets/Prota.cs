@@ -150,6 +150,7 @@ public class Prota : MonoBehaviour
             }
             yield return 0;
         }
+        tiempoInvulnerable=1f;
 
         match=false;
         subiendo=false;
