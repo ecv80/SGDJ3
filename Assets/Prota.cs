@@ -7,7 +7,7 @@ public class Prota : MonoBehaviour
     public GameObject eslabon=null;
 
     bool disparando=false;
-    bool subiendo=false;
+    public bool subiendo=false;
     bool match=false;
     Vector2 matchAt;
 
@@ -29,6 +29,7 @@ public class Prota : MonoBehaviour
         if (!disparando && match) {
             if (!subiendo)
                 StartCoroutine(SubeCadena(transform.position, matchAt));
+                StartCoroutine(GameManager.instancia.agua.SubeAgua(matchAt.y+GameManager.instancia.plataforma.transform.localScale.y/2f));
             return;
         }
 

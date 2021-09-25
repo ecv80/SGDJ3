@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject prota;
+    public Prota prota;
+    public Agua agua;
+
     public GameObject plataforma;
 
     float camZ;
