@@ -11,6 +11,8 @@ public class Prota : MonoBehaviour
     bool match=false;
     Vector2 matchAt;
 
+    List<GameObject> eslabonesDisparo=new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,9 @@ public class Prota : MonoBehaviour
         //Input
         if (Input.GetButtonDown("Fire1"))
         {
+            if (disparando)
+                return;
+            
             Vector3 mousePos = Input.mousePosition;
             Vector3 mouseWorldPos=Camera.main.ScreenToWorldPoint(mousePos);         
 
@@ -63,10 +68,12 @@ public class Prota : MonoBehaviour
         // int contador=0;
 
         int epf=eslabonesPorFrame;
+        eslabonesDisparo.Clear();
 
         while ((destino-pos).magnitude>incremento.magnitude) {
                 
-            Instantiate<GameObject>(eslabon, pos, Quaternion.identity);
+            GameObject esl=Instantiate<GameObject>(eslabon, pos, Quaternion.identity);
+            eslabonesDisparo.Add(esl);
 
             // contador++;
 
@@ -83,7 +90,13 @@ public class Prota : MonoBehaviour
 
         // print(contador+" eslabones.");
 
-        disparando=false;
+        //Si no hay match, destruir eslabones del disparo al cabo de un tiempo
+        if (match)
+            disparando=false;
+        else {
+            Invoke("QuitaEslabones", .2f);
+        }
+
         yield break;
     }
 
@@ -116,6 +129,14 @@ public class Prota : MonoBehaviour
         match=false;
         subiendo=false;
         yield break;
+    }
+
+    void QuitaEslabones() {
+        foreach(GameObject esl in eslabonesDisparo)
+            Destroy(esl);
+        eslabonesDisparo.Clear();
+
+        disparando=false;
     }
 
     void OnTriggerEnter2D(Collider2D other)
