@@ -10,6 +10,8 @@ public class Prota : MonoBehaviour
     public bool subiendo=false;
     bool match=false;
     Vector2 matchAt;
+    float tiempoInvulnerable=0f;
+    bool efectoInvulnerable=false;
 
     float protaHalfAlto=0f;
 
@@ -108,6 +110,8 @@ public class Prota : MonoBehaviour
         if (subiendo)
             yield break;
         subiendo=true;
+        tiempoInvulnerable+=1f;
+        StartCoroutine(EfectoInvulnerable());
 
         Vector2 pos=origen;
         Vector2 angulo=(destino-origen).normalized;
@@ -140,8 +144,10 @@ public class Prota : MonoBehaviour
         //Aterrizaje
         while (transform.position.y>destino.y+platHalfAlto+protaHalfAlto) {
             transform.position=new Vector2(transform.position.x, transform.position.y-Time.deltaTime*10f);
-            if (transform.position.y<=destino.y+platHalfAlto+protaHalfAlto)
+            if (transform.position.y<=destino.y+platHalfAlto+protaHalfAlto) {
                 transform.position=new Vector2(transform.position.x, destino.y+platHalfAlto+protaHalfAlto);
+                break;
+            }
             yield return 0;
         }
 
@@ -156,6 +162,31 @@ public class Prota : MonoBehaviour
         eslabonesDisparo.Clear();
 
         disparando=false;
+    }
+
+    IEnumerator EfectoInvulnerable () {
+        if (efectoInvulnerable)
+            yield break;
+        efectoInvulnerable=true;
+        
+        SpriteRenderer spr=GetComponent<SpriteRenderer>();
+        Color visible=spr.color;
+        Color invisible=visible;
+        invisible.a=.25f;
+        float tiempoInvisible=.05f;
+        float tiempoVisible=.1f;
+
+        while (tiempoInvulnerable>0f) {
+            spr.color=invisible;
+            yield return new WaitForSeconds(tiempoInvisible);
+
+            spr.color=visible;
+            yield return new WaitForSeconds(tiempoVisible);
+            tiempoInvulnerable-=tiempoInvisible+tiempoVisible;
+        }
+        
+        efectoInvulnerable=false;
+        yield break;
     }
 
     void OnTriggerEnter2D(Collider2D other)
