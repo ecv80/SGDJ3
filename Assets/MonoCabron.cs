@@ -15,4 +15,12 @@ public class MonoCabron : MonoBehaviour
     {
         
     }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.tag=="Prota") {//A hacer el cabrón lanzando cocos
+            print("COCAZO");
+        }
+    }
+
 }

@@ -50,17 +50,20 @@ public class Prota : MonoBehaviour
             Vector3 mousePos = Input.mousePosition;
             Vector3 mouseWorldPos=Camera.main.ScreenToWorldPoint(mousePos);         
 
-            RaycastHit2D hit = Physics2D.Raycast( mouseWorldPos, Vector2.zero );
-            if (!hit.collider) { //Disparo al aire
-                StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), mouseWorldPos));
-            }
-            else {
-                if (hit.collider.tag=="Plataforma") {
+            List <RaycastHit2D> hits=new List<RaycastHit2D>();
+            int h = Physics2D.Raycast( mouseWorldPos, Vector2.zero, new ContactFilter2D().NoFilter(), hits);
+            bool collidersRelevantes=false;
+            for (int i=0; i<h; i++) {
+                if (hits[i].collider.tag=="Plataforma") {
+                    collidersRelevantes=true;
                     //Aquí irían comprobaciones de que es la plataforma correcta
-                    matchAt=hit.transform.position;
+                    matchAt=hits[i].transform.position;
                     match=true;
                     StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), matchAt));
                 }
+            }
+            if (!collidersRelevantes) {//Disparo al aire
+                StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), mouseWorldPos));
             }
         }
         
