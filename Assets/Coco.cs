@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Coco : MonoBehaviour
 {
-    public Vector3 destino=Vector3.zero;
+    public Vector2 direccion=Vector2.zero;
     public float velocidad=1f;
 
     float nacimiento=0f;
@@ -25,6 +25,6 @@ public class Coco : MonoBehaviour
         }
 
         //Vas p'ande t'an dicho y punto
-        transform.position+=(destino-transform.position).normalized*Time.deltaTime*velocidad;
+        transform.position+=(Vector3)direccion*Time.deltaTime*velocidad;
     }
 }

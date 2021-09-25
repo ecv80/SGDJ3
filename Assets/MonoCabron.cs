@@ -41,7 +41,7 @@ public class MonoCabron : MonoBehaviour
 
                 GameObject cocoInstance=Instantiate<GameObject>(coco, transform.position, Quaternion.identity);
                 Coco c=cocoInstance.GetComponent<Coco>();
-                c.destino=destino; //Somewhere p'ahi_p'allá (la i sin tilde)
+                c.direccion=(destino-(Vector2)transform.position).normalized; //Somewhere p'ahi_p'allá (la i sin tilde)
                 c.velocidad=Random.Range(1f, 10f);
             }
         }
