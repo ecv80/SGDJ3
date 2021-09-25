@@ -13,6 +13,17 @@ public class GameManager : MonoBehaviour
     Vector2 plataformaMasDcha=new Vector2(20f, -5f);
     Vector2 plataformaMasIzqda=new Vector2(-20f, -5f);
 
+    public static GameManager instancia=null;
+
+    void Awake() { 
+        if (!instancia) {
+            instancia=this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+    }
+
     // Start is called before the first frame update
     void Start()
     {

@@ -11,11 +11,14 @@ public class Prota : MonoBehaviour
     bool match=false;
     Vector2 matchAt;
 
+    float protaHalfAlto=0f;
+
     List<GameObject> eslabonesDisparo=new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
+        protaHalfAlto=transform.localScale.y/2f;
         
     }
 
@@ -125,6 +128,21 @@ public class Prota : MonoBehaviour
             yield return 0;
 
         } //while (lastDiff>(lastDiff=(destino-pos).sqrMagnitude));
+
+        //Una vez subida la cadena, se sube a la plataforma
+        float platHalfAlto=GameManager.instancia.plataforma.transform.localScale.y/2f;
+        //Salto
+        while (transform.position.y<destino.y+platHalfAlto+protaHalfAlto+.5f) {
+            transform.position=new Vector2(transform.position.x, transform.position.y+Time.deltaTime*20f);
+            yield return 0;
+        }
+        //Aterrizaje
+        while (transform.position.y>destino.y+platHalfAlto+protaHalfAlto) {
+            transform.position=new Vector2(transform.position.x, transform.position.y-Time.deltaTime*10f);
+            if (transform.position.y<=destino.y+platHalfAlto+protaHalfAlto)
+                transform.position=new Vector2(transform.position.x, destino.y+platHalfAlto+protaHalfAlto);
+            yield return 0;
+        }
 
         match=false;
         subiendo=false;
