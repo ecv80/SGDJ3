@@ -27,4 +27,12 @@ public class Coco : MonoBehaviour
         //Vas p'ande t'an dicho y punto
         transform.position+=(Vector3)direccion*Time.deltaTime*velocidad;
     }
+
+    void OnTriggerEnter2D (Collider2D other) {
+        if (other.tag=="Eslabon") {
+            Destroy(gameObject);
+
+        }
+
+    }
 }
