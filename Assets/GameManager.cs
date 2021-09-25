@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     float camZ;
 
-    float plataformaMasAlta=-5f;
+    Vector2 plataformaMasAlta=new Vector2(0f, -5f);
     Vector2 plataformaMasDcha=new Vector2(20f, -5f);
     Vector2 plataformaMasIzqda=new Vector2(-20f, -5f);
 
@@ -48,8 +48,13 @@ public class GameManager : MonoBehaviour
         Vector3 destino=new Vector3(prota.transform.position.x, prota.transform.position.y+4.5f, camZ); 
         transform.position+=(destino-transform.position)*Time.deltaTime*3f;
 
+        //Resetear plataforma mas alta, segun se actualiza el eje x de la camara
+        if (plataformaMasAlta.x<transform.position.x-10f || 
+            plataformaMasAlta.x>transform.position.x+10f)
+                plataformaMasAlta=transform.position;
+
         //Añadir plataformas si eso
-        if (transform.position.y>plataformaMasAlta-10f) { //mejor 10 que 5, por dar más margen
+        if (transform.position.y>plataformaMasAlta.y-10f) { //mejor 10 que 5, por dar más margen
             AnadePlataformas(20, new Vector2(transform.position.x, transform.position.y+5f));
             //Si se atraganta, la convertimos en corutina luego
             //pero antes a ver que tal funciona con pooling
@@ -86,8 +91,8 @@ public class GameManager : MonoBehaviour
                         Destroy(plat);
                         continue;
                     }
-                if (pos.y>plataformaMasAlta)
-                    plataformaMasAlta=pos.y;
+                if (pos.y>plataformaMasAlta.y)
+                    plataformaMasAlta=pos;
                 if (pos.x>plataformaMasDcha.x)
                     plataformaMasDcha=pos;
                 if (pos.x<plataformaMasIzqda.x)
