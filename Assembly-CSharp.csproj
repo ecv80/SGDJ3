@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Agua.cs" />
+     <Compile Include="Assets\Coco.cs" />
      <Compile Include="Assets\GameManager.cs" />
      <Compile Include="Assets\MonoCabron.cs" />
      <Compile Include="Assets\Prota.cs" />
