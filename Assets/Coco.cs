@@ -29,8 +29,16 @@ public class Coco : MonoBehaviour
     }
 
     void OnTriggerEnter2D (Collider2D other) {
-        if (other.tag=="Eslabon") {
-            Destroy(gameObject);
+        switch(other.tag) {
+            case "Eslabon":
+                Destroy(gameObject);
+            break;
+            case "Prota":
+                GameManager.instancia.gameOverText.text="COCAZO t'has llevao, hamijo";
+                GameManager.instancia.gameOverText.gameObject.SetActive(true);
+            break;
+            default:
+            break;
 
         }
 

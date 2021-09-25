@@ -28,9 +28,6 @@ public class MonoCabron : MonoBehaviour
             if (Time.time>ultimoCocoT+cadenciaTiradaCocos) {//Han pasado mas de cadenciaTiradaCocos segundos desde la ultima tirada de cocos?
                 ultimoCocoT=Time.time;
 
-                //TO-DO:
-                //4. morir por cocazo
-
                 LanzaCoco();
                 float retraso2aTirada=Random.Range(cadenciaTiradaCocos/6f, cadenciaTiradaCocos/3f);
                 Invoke("LanzaCoco", retraso2aTirada);
