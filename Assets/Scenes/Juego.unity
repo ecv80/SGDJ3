@@ -198,12 +198,12 @@ GameObject:
   - component: {fileID: 403578405}
   - component: {fileID: 403578404}
   m_Layer: 5
-  m_Name: Game Over
+  m_Name: Texto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &403578403
 RectTransform:
   m_ObjectHideFlags: 0
@@ -252,8 +252,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278255546
-  m_fontColor: {r: 0.7315198, g: 1, b: 0, a: 1}
+    rgba: 65466
+  m_fontColor: {r: 0.7315198, g: 1, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -440,6 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eslabon: {fileID: 6393405954556213183, guid: c7cab7ce26dae6430af54148b1430674, type: 3}
   subiendo: 0
+  efectoInvulnerable: 0
 --- !u!61 &512342218
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -528,12 +529,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prota: {fileID: 512342217}
   agua: {fileID: 1555068184}
-  gameOverText: {fileID: 403578404}
+  texto: {fileID: 0}
   monoCabron: {fileID: 8586760390470216131, guid: b00d273b7315e3894b5c3d9fbf67c81a,
     type: 3}
   plataforma: {fileID: 8345349855901765768, guid: 23dcd7ab408325e73a136cc2ea60d288,
     type: 3}
   plataformasPorSubir: 0
+  gameOver: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
