@@ -43,6 +43,10 @@ public class MonoCabron : MonoBehaviour
         Vector2 destinoOriginal=GameManager.instancia.prota.transform.position;
 
         Vector2 destino=destinoOriginal-(Vector2)transform.position;
+        
+        if (destino.y>0) //Cocos hacia arriba, jamás
+            return;
+
         destino=Quaternion.Euler(0f, 0f, Random.Range(-toleranciaAngulo, toleranciaAngulo))*destino;
         destino=(Vector2)transform.position+destino;
 

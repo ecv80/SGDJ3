@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+
+public enum GameOver {Ahogado, Coco};
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +22,8 @@ public class GameManager : MonoBehaviour
     Vector2 plataformaMasIzqda=new Vector2(-20f, -5f);
 
     public int plataformasPorSubir=0;
+
+    public bool gameOver=false;
 
 
     public static GameManager instancia=null;
@@ -121,6 +126,34 @@ public class GameManager : MonoBehaviour
                 //porque así tendremos más variabilidad a costa de ningún recurso más
             }
         }
+    }
+
+    public void Fin(GameOver razon) {
+        if (gameOver)
+            return;
+        gameOver=true;
+
+        switch(razon) {
+            case GameOver.Ahogado:
+                gameOverText.text="AHOGADO";
+                gameOverText.gameObject.SetActive(true);
+            break;
+            case GameOver.Coco:
+                gameOverText.text="COCAZO t'has llevao, hamijo";
+                gameOverText.gameObject.SetActive(true);
+            break;
+            default:
+            break;
+        }
+
+        //Ir al inicio
+        Invoke("Inicio", 2f);
+
+    }
+
+    void Inicio() {
+        SceneManager.LoadScene("Inicio");
+        Destroy(Camera.main.gameObject);
     }
 
 }

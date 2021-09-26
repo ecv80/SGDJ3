@@ -27,43 +27,47 @@ public class Prota : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!efectoInvulnerable) { //Muerte?
-            if (GameManager.instancia.agua.transform.position.y+10f>transform.position.y+protaHalfAlto+.5f) { //Ahogado
-                GameManager.instancia.gameOverText.text="AHOGADO";
-                GameManager.instancia.gameOverText.gameObject.SetActive(true);
-            }
-        }
-
-        if (!disparando && match) {
-            if (!subiendo)
-                StartCoroutine(SubeCadena(transform.position, matchAt));
-                StartCoroutine(GameManager.instancia.agua.SubeAgua(matchAt.y+GameManager.instancia.plataforma.transform.localScale.y/2f));
-            return;
-        }
-
-        //Input
-        if (Input.GetButtonDown("Fire1"))
-        {
-            if (disparando)
-                return;
+        if (GameManager.instancia.gameOver) {
             
-            Vector3 mousePos = Input.mousePosition;
-            Vector3 mouseWorldPos=Camera.main.ScreenToWorldPoint(mousePos);         
-
-            List <RaycastHit2D> hits=new List<RaycastHit2D>();
-            int h = Physics2D.Raycast( mouseWorldPos, Vector2.zero, new ContactFilter2D().NoFilter(), hits);
-            bool collidersRelevantes=false;
-            for (int i=0; i<h; i++) {
-                if (hits[i].collider.tag=="Plataforma") {
-                    collidersRelevantes=true;
-                    //Aquí irían comprobaciones de que es la plataforma correcta
-                    matchAt=hits[i].transform.position;
-                    match=true;
-                    StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), matchAt));
+        }
+        else {
+            if(!efectoInvulnerable) { //Muerte?
+                if (GameManager.instancia.agua.transform.position.y+10f>transform.position.y+protaHalfAlto+.5f) { //Ahogado
+                    GameManager.instancia.Fin(GameOver.Ahogado);
                 }
             }
-            if (!collidersRelevantes) {//Disparo al aire
-                StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), mouseWorldPos));
+
+            if (!disparando && match) {
+                if (!subiendo)
+                    StartCoroutine(SubeCadena(transform.position, matchAt));
+                    StartCoroutine(GameManager.instancia.agua.SubeAgua(matchAt.y+GameManager.instancia.plataforma.transform.localScale.y/2f));
+                return;
+            }
+
+            //Input
+            if (Input.GetButtonDown("Fire1"))
+            {
+                if (disparando)
+                    return;
+                
+                Vector3 mousePos = Input.mousePosition;
+                Vector3 mouseWorldPos=Camera.main.ScreenToWorldPoint(mousePos);         
+
+                List <RaycastHit2D> hits=new List<RaycastHit2D>();
+                int h = Physics2D.Raycast( mouseWorldPos, Vector2.zero, new ContactFilter2D().NoFilter(), hits);
+                bool collidersRelevantes=false;
+                for (int i=0; i<h; i++) {
+                    if (hits[i].collider.tag=="Plataforma") {
+                        collidersRelevantes=true;
+                        //Aquí irían comprobaciones de que es la plataforma correcta
+                        matchAt=hits[i].transform.position;
+                        match=true;
+                        StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), matchAt));
+                    }
+                }
+                if (!collidersRelevantes) {//Disparo al aire
+                    StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), mouseWorldPos));
+                }
             }
         }
         
