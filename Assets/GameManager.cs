@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum GameOver {Ahogado, Coco, Ganado};
 
@@ -25,6 +26,9 @@ public class GameManager : MonoBehaviour
     Vector2 plataformaMasIzqda=new Vector2(-20f, -5f);
 
     public int plataformasPorSubir=0;
+
+    public Slider barraProgreso;
+    public TextMeshProUGUI textoProgreso;
 
     public bool gameOver=false;
 
@@ -71,6 +75,8 @@ public class GameManager : MonoBehaviour
         prota=FindObjectOfType<Prota>();
         agua=FindObjectOfType<Agua>();
         texto=GameObject.Find("Texto").GetComponent<TextMeshProUGUI>();
+        barraProgreso=GameObject.Find("Barra").GetComponent<Slider>();
+        textoProgreso=GameObject.Find("Progreso").GetComponent<TextMeshProUGUI>();
 
         transform.position=new Vector3(0f, 0f, -10f);
 
@@ -87,6 +93,10 @@ public class GameManager : MonoBehaviour
         Poblar(10, prota.transform.position);
 
         plataformasPorSubir=nivel;
+        barraProgreso.value=0;
+        barraProgreso.minValue=0;
+        barraProgreso.maxValue=nivel;
+        textoProgreso.text="0/"+nivel;
 
         //Nivel
         gameOver=true; //bloquear

@@ -165,6 +165,8 @@ public class Prota : MonoBehaviour
         }
         tiempoInvulnerable=1f;
         GameManager.instancia.plataformasPorSubir--;
+        GameManager.instancia.barraProgreso.value++;
+        GameManager.instancia.textoProgreso.text=GameManager.instancia.barraProgreso.value+"/"+GameManager.instancia.barraProgreso.maxValue;
         if (GameManager.instancia.plataformasPorSubir<=0) {//Hemos ganado?
             GameManager.instancia.Fin(GameOver.Ganado);
         }
