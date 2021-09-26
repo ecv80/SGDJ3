@@ -24,7 +24,10 @@ public class MonoCabron : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
+        // print("OnTriggerStay2D");
+
         if (other.tag=="Prota") {//A hacer el cabrón lanzando cocos
+            // print("Prota");
             if (Time.time>ultimoCocoT+cadenciaTiradaCocos) {//Han pasado mas de cadenciaTiradaCocos segundos desde la ultima tirada de cocos?
                 ultimoCocoT=Time.time;
 
