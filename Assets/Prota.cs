@@ -10,7 +10,7 @@ public class Prota : MonoBehaviour
     public bool subiendo=false;
     bool match=false;
     Vector2 matchAt;
-    float tiempoInvulnerable=0f;
+    public float tiempoInvulnerable=0f;
     public bool efectoInvulnerable=false;
 
     float protaHalfAlto=0f;
@@ -182,7 +182,7 @@ public class Prota : MonoBehaviour
         disparando=false;
     }
 
-    IEnumerator EfectoInvulnerable () {
+    public IEnumerator EfectoInvulnerable () {
         if (efectoInvulnerable)
             yield break;
         efectoInvulnerable=true;

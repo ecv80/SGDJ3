@@ -12,8 +12,8 @@ public class MonoCabron : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ultimoCocoT=Time.time;
         cadenciaTiradaCocos+=cadenciaTiradaCocos/10f*Random.Range(-1f, 1f);
+        ultimoCocoT=Time.time-cadenciaTiradaCocos; //Empieza a tirar cocos inmediatamente
     }
 
     // Update is called once per frame

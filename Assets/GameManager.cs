@@ -142,46 +142,46 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void AnadePlataformas (int cantidadPorTramo, Vector2 origen, int tramos=2) {
-        float halfAncho=plataforma.transform.localScale.x/2f;
-        float halfAlto=plataforma.transform.localScale.y/2f;
+    // void AnadePlataformas (int cantidadPorTramo, Vector2 origen, int tramos=2) {
+    //     float halfAncho=plataforma.transform.localScale.x/2f;
+    //     float halfAlto=plataforma.transform.localScale.y/2f;
 
-        //Siempre debe haber una plataforma por cada 10 de altura para que siempre haya una visible
-        //en pantalla en todo momento, por lo que voy a partir la instanciación en trozos de a 10.
-        for (int tramo=0; tramo<tramos; tramo++) {
-            for (int i=0; i<cantidadPorTramo; i++) {
-                Vector2 pos=new Vector2(Random.Range(origen.x-20f+halfAncho, origen.x+20f-halfAncho), Random.Range(origen.y+tramo*10f+1.25f+halfAlto, origen.y+(tramo+1)*10f-halfAlto));
-                GameObject plat=Instantiate<GameObject>(plataforma, pos, Quaternion.identity);
-                List<Collider2D> colliders=new List<Collider2D>();
-                int plts=plat.GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D().NoFilter(), colliders);
-                bool sigue=false;
-                for (int j=0; j<plts; j++)
-                    if (colliders[j].tag=="Plataforma") {
-                        Destroy(plat);
-                        sigue=true;
-                        break;
-                    }
-                if (sigue)
-                    continue;
+    //     //Siempre debe haber una plataforma por cada 10 de altura para que siempre haya una visible
+    //     //en pantalla en todo momento, por lo que voy a partir la instanciación en trozos de a 10.
+    //     for (int tramo=0; tramo<tramos; tramo++) {
+    //         for (int i=0; i<cantidadPorTramo; i++) {
+    //             Vector2 pos=new Vector2(Random.Range(origen.x-20f+halfAncho, origen.x+20f-halfAncho), Random.Range(origen.y+tramo*10f+1.25f+halfAlto, origen.y+(tramo+1)*10f-halfAlto));
+    //             GameObject plat=Instantiate<GameObject>(plataforma, pos, Quaternion.identity);
+    //             List<Collider2D> colliders=new List<Collider2D>();
+    //             int plts=plat.GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D().NoFilter(), colliders);
+    //             bool sigue=false;
+    //             for (int j=0; j<plts; j++)
+    //                 if (colliders[j].tag=="Plataforma") {
+    //                     Destroy(plat);
+    //                     sigue=true;
+    //                     break;
+    //                 }
+    //             if (sigue)
+    //                 continue;
 
-                if (pos.y>plataformaMasAlta.y)
-                    plataformaMasAlta=pos;
-                if (pos.x>plataformaMasDcha.x)
-                    plataformaMasDcha=pos;
-                if (pos.x<plataformaMasIzqda.x)
-                    plataformaMasIzqda=pos;
+    //             if (pos.y>plataformaMasAlta.y)
+    //                 plataformaMasAlta=pos;
+    //             if (pos.x>plataformaMasDcha.x)
+    //                 plataformaMasDcha=pos;
+    //             if (pos.x<plataformaMasIzqda.x)
+    //                 plataformaMasIzqda=pos;
 
-                //Poner a un mono cabron?
-                if (Random.value<1f/20f) {
-                    Instantiate<GameObject>(monoCabron, new Vector2(pos.x, pos.y+halfAlto+monoCabron.transform.localScale.y/2f), Quaternion.identity);
-                }
+    //             //Poner a un mono cabron?
+    //             if (Random.value<1f/20f) {
+    //                 Instantiate<GameObject>(monoCabron, new Vector2(pos.x, pos.y+halfAlto+monoCabron.transform.localScale.y/2f), Quaternion.identity);
+    //             }
                     
 
-                //No vamos a reinstanciar indefinidamente las plataformas hasta dar con lugares donde no solapen a otras
-                //porque así tendremos más variabilidad a costa de ningún recurso más
-            }
-        }
-    }
+    //             //No vamos a reinstanciar indefinidamente las plataformas hasta dar con lugares donde no solapen a otras
+    //             //porque así tendremos más variabilidad a costa de ningún recurso más
+    //         }
+    //     }
+    // }
 
     public void Fin(GameOver razon) {
         if (gameOver)
@@ -224,6 +224,8 @@ public class GameManager : MonoBehaviour
     }
 
     void Desbloquear() {
+        prota.tiempoInvulnerable=3f;
+        StartCoroutine(prota.EfectoInvulnerable());
         gameOver=false;
         texto.color=textoInvisible;
     }
