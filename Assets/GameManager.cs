@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         //La fila de inicio está en y=0
         //La fila de arriba está en y=tamaño camara(altura)*2
     }
+    List<Fila> filas=new List<Fila>();
 
 
     public static GameManager instancia=null;
@@ -227,12 +228,40 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded-=OnSceneLoaded;
     }
 
-    bool Poblado () {
+    bool Poblado (float x, float y) { //Comprueba si la pantalla de esas coordenadas está poblada
+        foreach(Fila f in filas)
+            if ()
         return false;
     }
 
     void Poblar (float x, float y) {
 
+    }
+
+    Vector2 limitesFila (float y) { 
+        //Devuelve los límites inferior y superior (por ese orden) de la fila
+        //en la que cae una coordenada y
+        y=centraCoordFila(y);
+        float offset=Camera.main.orthographicSize;
+        return new Vector2(y-offset, y+offset);
+    }
+
+    Vector2 limitesPantalla (float x) { 
+        //Devuelve los límites izquierdo y derecho (por ese orden) de la pantalla
+        //en la que cae una coordenada x
+        x=centraCoordPantalla(x);
+        float offset=Camera.main.orthographicSize*Camera.main.aspect;
+        return new Vector2(x-offset, x+offset);
+    }
+
+    float centraCoordFila (float y) {
+        return Mathf.Round(y/(Camera.main.orthographicSize*2f))
+            *Camera.main.orthographicSize*2f;
+    }
+
+    float centraCoordPantalla (float x) {
+        return Mathf.Round(x/(Camera.main.orthographicSize*Camera.main.aspect*2f))
+            *Camera.main.orthographicSize*Camera.main.aspect*2f;
     }
 
     
