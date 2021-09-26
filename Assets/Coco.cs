@@ -33,7 +33,7 @@ public class Coco : MonoBehaviour
             case "Eslabon":
                 Destroy(gameObject);
             break;
-            case "Prota":
+            case "Prota"://TO-DO: Si es invulnerable pues nada
                 GameManager.instancia.gameOverText.text="COCAZO t'has llevao, hamijo";
                 GameManager.instancia.gameOverText.gameObject.SetActive(true);
             break;

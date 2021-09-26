@@ -56,6 +56,7 @@
      <Compile Include="Assets\Agua.cs" />
      <Compile Include="Assets\Coco.cs" />
      <Compile Include="Assets\GameManager.cs" />
+     <Compile Include="Assets\Inicio.cs" />
      <Compile Include="Assets\MonoCabron.cs" />
      <Compile Include="Assets\Prota.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
