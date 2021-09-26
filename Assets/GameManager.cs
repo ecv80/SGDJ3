@@ -30,6 +30,28 @@ public class GameManager : MonoBehaviour
 
     int nivel=1;
 
+    //Aqui va el mapeado de pantallas des/pobladas con plataformas
+    //Para agilizar codigo y rendimiento, podría hacerlo con un simple array bidimensional de bools, 
+    //de 10mil x 10mil puesto que es improbable que el usuario llegue tan lejos. El problema es que
+    //los bool ocupan un byte entero en C# y resulta en una cantidad ingente de ram. 
+    //No me parece aceptable. Así que opto por hacerlo con listas de objetos.
+    //En lugar de usar una gran lista con objetos de todas las pantallas con sus correspondientes
+    //coordenadas, para agilizar la busqueda voy a utilizar una lista de filas por altura y otra
+    //de pantallas por fila.
+    //La mera existencia de una pantalla, implica el hecho de que ha sido poblada con plataformas.
+    public class Pantalla {
+        public float x; 
+        //La pantalla de inicio está en x=0
+        //La pantalla de la izquierda, quedaría en x=-tamaño camara(altura)*ratio camara*2
+        //La pantalla de la derecha, quedaría en x=tamaño camara(altura)*ratio camara*2
+    }
+    public class Fila {
+        public float y;
+        public List<Pantalla> pantallas=new List<Pantalla>();
+        //La fila de inicio está en y=0
+        //La fila de arriba está en y=tamaño camara(altura)*2
+    }
+
 
     public static GameManager instancia=null;
 
@@ -203,6 +225,14 @@ public class GameManager : MonoBehaviour
 
     void OnDestroy() {
         SceneManager.sceneLoaded-=OnSceneLoaded;
+    }
+
+    bool Poblado () {
+        return false;
+    }
+
+    void Poblar (float x, float y) {
+
     }
 
     
