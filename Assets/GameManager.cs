@@ -82,7 +82,9 @@ public class GameManager : MonoBehaviour
         camZ=transform.position.z;
 
         //Crea plataformas
-        AnadePlataformas(20, prota.transform.position);
+        // AnadePlataformas(20, prota.transform.position);
+        filas.Clear();
+        Poblar(10, prota.transform.position);
 
         plataformasPorSubir=nivel;
 
@@ -112,29 +114,31 @@ public class GameManager : MonoBehaviour
         Vector3 destino=new Vector3(prota.transform.position.x, prota.transform.position.y+4.5f, camZ); 
         transform.position+=(destino-transform.position)*Time.deltaTime*3f;
 
-        //Resetear plataforma mas alta, segun se actualiza el eje x de la camara
-        if (plataformaMasAlta.x<transform.position.x-10f || 
-            plataformaMasAlta.x>transform.position.x+10f)
-                plataformaMasAlta=transform.position;
+        AnadirPlataformasAlrededor(10, transform.position);
 
-        //Añadir plataformas si eso
-        if (transform.position.y>plataformaMasAlta.y-10f) { //mejor 10 que 5, por dar más margen
-            AnadePlataformas(20, new Vector2(transform.position.x, transform.position.y+5f));
-            //Si se atraganta, la convertimos en corutina luego
-            //pero antes a ver que tal funciona con pooling
-        }
+        // //Resetear plataforma mas alta, segun se actualiza el eje x de la camara
+        // if (plataformaMasAlta.x<transform.position.x-10f || 
+        //     plataformaMasAlta.x>transform.position.x+10f)
+        //         plataformaMasAlta=transform.position;
 
-        //Resetear plataformas mas a la dcha e izqda, segun se actualiza la altura de la camara
-        if (plataformaMasDcha.y<transform.position.y-5f)
-            plataformaMasDcha=transform.position;
-        if (plataformaMasIzqda.y<transform.position.y-5f)
-            plataformaMasIzqda=transform.position;
+        // //Añadir plataformas si eso
+        // if (transform.position.y>plataformaMasAlta.y-10f) { //mejor 10 que 5, por dar más margen
+        //     AnadePlataformas(20, new Vector2(transform.position.x, transform.position.y+5f));
+        //     //Si se atraganta, la convertimos en corutina luego
+        //     //pero antes a ver que tal funciona con pooling
+        // }
 
-        //Añadir plataformas a los lados si eso
-        if (transform.position.x>plataformaMasDcha.x-20f)
-            AnadePlataformas(20, new Vector2(transform.position.x+30f, transform.position.y-5f));
-        if (transform.position.x<plataformaMasIzqda.x+20f)
-            AnadePlataformas(20, new Vector2(transform.position.x-30f, transform.position.y-5f));
+        // //Resetear plataformas mas a la dcha e izqda, segun se actualiza la altura de la camara
+        // if (plataformaMasDcha.y<transform.position.y-5f)
+        //     plataformaMasDcha=transform.position;
+        // if (plataformaMasIzqda.y<transform.position.y-5f)
+        //     plataformaMasIzqda=transform.position;
+
+        // //Añadir plataformas a los lados si eso
+        // if (transform.position.x>plataformaMasDcha.x-20f)
+        //     AnadePlataformas(20, new Vector2(transform.position.x+30f, transform.position.y-5f));
+        // if (transform.position.x<plataformaMasIzqda.x+20f)
+        //     AnadePlataformas(20, new Vector2(transform.position.x-30f, transform.position.y-5f));
 
     }
 
@@ -228,13 +232,13 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded-=OnSceneLoaded;
     }
 
-    bool Poblado (float x, float y) { //Comprueba si la pantalla de esas coordenadas está poblada
+    bool Poblado (Vector2 pos) { //Comprueba si la pantalla de esas coordenadas está poblada
         foreach(Fila f in filas) {
             Vector2 lim=limitesFila(f.y);
-            if (y>lim.x && y<lim.y) {
+            if (pos.y>=lim.x && pos.y<lim.y) {
                 foreach(Pantalla p in f.pantallas) {
                     lim=limitesPantalla(p.x);
-                    if (x>lim.x && x<lim.y)
+                    if (pos.x>=lim.x && pos.x<lim.y)
                         return true;
                 }
                 break;
@@ -243,8 +247,59 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    void Poblar (float x, float y) {
+    void Poblar (int cantidadPorPantalla, Vector2 origen) {
+        if (Poblado(origen)) //Si ya esta poblada, no la repobles, joé
+            return;
+        Fila f=null;
+        foreach(Fila fi in filas) { //Existe la fila? Si no, crearla
+            Vector2 lim=limitesFila(fi.y);
+            if (origen.y>=lim.x && origen.y<lim.y) { //La fila existe
+                f=fi; 
+                break;
+            }
+        }
+
+        Pantalla p=new Pantalla();
+        p.x=centraCoordPantalla(origen.x);
+
+        if (f==null) {
+            f=new Fila();
+            f.y=centraCoordFila(origen.y);
+            filas.Add(f);
+        }
+        f.pantallas.Add(p);
         
+        Vector2 limX=limitesPantalla(origen.x);
+        Vector2 limY=limitesFila(origen.y);
+        
+        float halfAncho=plataforma.transform.localScale.x/2f;
+        float halfAlto=plataforma.transform.localScale.y/2f;
+
+        for (int i=0; i<cantidadPorPantalla; i++) {
+            Vector2 pos=new Vector2(Random.Range(limX.x+halfAncho, limX.y-halfAncho), Random.Range(limY.x+1.25f+halfAlto, limY.y-halfAlto));
+            GameObject plat=Instantiate<GameObject>(plataforma, pos, Quaternion.identity);
+            List<Collider2D> colliders=new List<Collider2D>();
+            int plts=plat.GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D().NoFilter(), colliders);
+            bool sigue=false;
+            for (int j=0; j<plts; j++)
+                if (colliders[j].tag=="Plataforma") {
+                    Destroy(plat);
+                    sigue=true;
+                    break;
+                }
+            if (sigue)
+                continue;
+
+            //Poner a un mono cabron?
+            if (Random.value<1f/20f) {
+                Instantiate<GameObject>(monoCabron, new Vector2(pos.x, pos.y+halfAlto+monoCabron.transform.localScale.y/2f), Quaternion.identity);
+            }
+                
+
+            //No vamos a reinstanciar indefinidamente las plataformas hasta dar con lugares donde no solapen a otras
+            //porque así tendremos más variabilidad a costa de ningún recurso más
+        }
+
     }
 
     Vector2 limitesFila (float y) { 
@@ -271,6 +326,20 @@ public class GameManager : MonoBehaviour
     float centraCoordPantalla (float x) {
         return Mathf.Round(x/(Camera.main.orthographicSize*Camera.main.aspect*2f))
             *Camera.main.orthographicSize*Camera.main.aspect*2f;
+    }
+
+    void AnadirPlataformasAlrededor(int cantidadPorPantalla, Vector2 pos) {
+        //Usa Poblar() para añadir plataformas en las pantallas
+        //colindantes: superior, izquierda, derecha, sup-izqda y sup-dcha
+        float xOffset=Camera.main.orthographicSize*Camera.main.aspect+1f; //El 1 es un margen de seguridad
+        float yOffset=Camera.main.orthographicSize+1f;
+
+        Poblar(cantidadPorPantalla, new Vector2(pos.x-xOffset, pos.y)); //Izqda
+        Poblar(cantidadPorPantalla, new Vector2(pos.x+xOffset, pos.y)); //Dcha
+        Poblar(cantidadPorPantalla, new Vector2(pos.x, pos.y+yOffset)); //Arriba
+        Poblar(cantidadPorPantalla, new Vector2(pos.x-xOffset, pos.y+yOffset)); //Arriba Izqda
+        Poblar(cantidadPorPantalla, new Vector2(pos.x+xOffset, pos.y+yOffset)); //Arriba Dcha
+
     }
 
     
