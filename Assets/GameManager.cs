@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public enum GameOver {Ahogado, Coco};
+public enum GameOver {Ahogado, Coco, Ganado};
 
 public class GameManager : MonoBehaviour
 {
@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     public bool gameOver=false;
 
+    int nivel=1;
+
 
     public static GameManager instancia=null;
 
@@ -32,6 +34,7 @@ public class GameManager : MonoBehaviour
         if (!instancia) {
             instancia=this;
             DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(prota.gameObject);
         }
         else
             Destroy(gameObject);
@@ -45,7 +48,13 @@ public class GameManager : MonoBehaviour
         //Crea plataformas
         AnadePlataformas(20, prota.transform.position);
 
-        plataformasPorSubir=10;
+        plataformasPorSubir=nivel;
+
+        //Nivel
+        gameOver=true; //bloquear
+        gameOverText.text="Nivel "+nivel;
+        gameOverText.gameObject.SetActive(true);
+        Invoke("Desbloquear", 2f);
         
     }
 
@@ -142,6 +151,12 @@ public class GameManager : MonoBehaviour
                 gameOverText.text="COCAZO t'has llevao, hamijo";
                 gameOverText.gameObject.SetActive(true);
             break;
+            case GameOver.Ganado:
+                gameOverText.text="¡BRAVO!";
+                gameOverText.gameObject.SetActive(true);
+                Invoke("SiguienteNivel", 2f);
+                return;
+            break;
             default:
             break;
         }
@@ -154,6 +169,17 @@ public class GameManager : MonoBehaviour
     void Inicio() {
         SceneManager.LoadScene("Inicio");
         Destroy(Camera.main.gameObject);
+        Destroy(prota.gameObject);
+    }
+
+    void SiguienteNivel () {
+        nivel++;
+        SceneManager.LoadScene("Juego");
+    }
+
+    void Desbloquear() {
+        gameOver=false;
+        gameOverText.gameObject.SetActive(false);
     }
 
 }

@@ -28,7 +28,7 @@ public class Prota : MonoBehaviour
     void Update()
     {
         if (GameManager.instancia.gameOver) {
-            
+
         }
         else {
             if(!efectoInvulnerable) { //Muerte?
@@ -166,8 +166,7 @@ public class Prota : MonoBehaviour
         tiempoInvulnerable=1f;
         GameManager.instancia.plataformasPorSubir--;
         if (GameManager.instancia.plataformasPorSubir<=0) {//Hemos ganado?
-            GameManager.instancia.gameOverText.text="¡BRAVO!";
-            GameManager.instancia.gameOverText.gameObject.SetActive(true);
+            GameManager.instancia.Fin(GameOver.Ganado);
         }
 
         match=false;
