@@ -13,6 +13,9 @@ public class Agua : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Camera.main==null)
+            return;
+        
         transform.position=new Vector2(Camera.main.transform.position.x, transform.position.y); //Centrada en la camara siempre
 
         if (!GameManager.instancia.prota.subiendo && !GameManager.instancia.gameOver)
