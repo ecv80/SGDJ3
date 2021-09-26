@@ -33,8 +33,9 @@ public class Coco : MonoBehaviour
             case "Eslabon":
                 Destroy(gameObject);
             break;
-            case "Prota"://TO-DO: Si es invulnerable pues nada
-                GameManager.instancia.Fin(GameOver.Coco);
+            case "Prota":
+                if (GameManager.instancia.prota.efectoInvulnerable==false)
+                    GameManager.instancia.Fin(GameOver.Coco);
             break;
             default:
             break;

@@ -11,7 +11,7 @@ public class Prota : MonoBehaviour
     bool match=false;
     Vector2 matchAt;
     float tiempoInvulnerable=0f;
-    bool efectoInvulnerable=false;
+    public bool efectoInvulnerable=false;
 
     float protaHalfAlto=0f;
 

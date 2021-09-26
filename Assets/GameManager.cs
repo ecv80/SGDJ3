@@ -10,7 +10,10 @@ public class GameManager : MonoBehaviour
 {
     public Prota prota;
     public Agua agua;
-    public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI texto;
+
+    Color textoVisible;
+    Color textoInvisible;
 
     public GameObject monoCabron;
     public GameObject plataforma;
@@ -33,16 +36,26 @@ public class GameManager : MonoBehaviour
     void Awake() { 
         if (!instancia) {
             instancia=this;
+            SceneManager.sceneLoaded+=OnSceneLoaded;
             DontDestroyOnLoad(gameObject);
-            DontDestroyOnLoad(prota.gameObject);
         }
         else
             Destroy(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    void OnSceneLoaded(Scene escena, LoadSceneMode modo) {
+        //Buscar referencias (los asignados en el inspector que no sean prefab)
+        prota=FindObjectOfType<Prota>();
+        agua=FindObjectOfType<Agua>();
+        texto=GameObject.Find("Texto").GetComponent<TextMeshProUGUI>();
+
+        transform.position=new Vector3(0f, 0f, -10f);
+
+        textoVisible=texto.color;
+        textoVisible.a=1f;
+        textoInvisible=texto.color;
+        textoInvisible.a=0f;
+
         camZ=transform.position.z;
 
         //Crea plataformas
@@ -52,9 +65,15 @@ public class GameManager : MonoBehaviour
 
         //Nivel
         gameOver=true; //bloquear
-        gameOverText.text="Nivel "+nivel;
-        gameOverText.gameObject.SetActive(true);
+        texto.text="Nivel "+nivel;
+        texto.color=textoVisible;
+
         Invoke("Desbloquear", 2f);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         
     }
 
@@ -144,16 +163,16 @@ public class GameManager : MonoBehaviour
 
         switch(razon) {
             case GameOver.Ahogado:
-                gameOverText.text="AHOGADO";
-                gameOverText.gameObject.SetActive(true);
+                texto.text="AHOGADO";
+                texto.color=textoVisible;
             break;
             case GameOver.Coco:
-                gameOverText.text="COCAZO t'has llevao, hamijo";
-                gameOverText.gameObject.SetActive(true);
+                texto.text="COCAZO t'has llevao, hamijo";
+                texto.color=textoVisible;
             break;
             case GameOver.Ganado:
-                gameOverText.text="¡BRAVO!";
-                gameOverText.gameObject.SetActive(true);
+                texto.text="¡BRAVO!";
+                texto.color=textoVisible;
                 Invoke("SiguienteNivel", 2f);
                 return;
             break;
@@ -179,7 +198,13 @@ public class GameManager : MonoBehaviour
 
     void Desbloquear() {
         gameOver=false;
-        gameOverText.gameObject.SetActive(false);
+        texto.color=textoInvisible;
     }
+
+    void OnDestroy() {
+        SceneManager.sceneLoaded-=OnSceneLoaded;
+    }
+
+    
 
 }

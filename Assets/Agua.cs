@@ -15,7 +15,7 @@ public class Agua : MonoBehaviour
     {
         transform.position=new Vector2(Camera.main.transform.position.x, transform.position.y); //Centrada en la camara siempre
 
-        if (!GameManager.instancia.prota.subiendo)
+        if (!GameManager.instancia.prota.subiendo && !GameManager.instancia.gameOver)
             transform.position+=Vector3.up*Time.deltaTime*.1f;
     }
 
