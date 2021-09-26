@@ -229,13 +229,22 @@ public class GameManager : MonoBehaviour
     }
 
     bool Poblado (float x, float y) { //Comprueba si la pantalla de esas coordenadas está poblada
-        foreach(Fila f in filas)
-            if ()
+        foreach(Fila f in filas) {
+            Vector2 lim=limitesFila(f.y);
+            if (y>lim.x && y<lim.y) {
+                foreach(Pantalla p in f.pantallas) {
+                    lim=limitesPantalla(p.x);
+                    if (x>lim.x && x<lim.y)
+                        return true;
+                }
+                break;
+            }
+        }
         return false;
     }
 
     void Poblar (float x, float y) {
-
+        
     }
 
     Vector2 limitesFila (float y) { 
