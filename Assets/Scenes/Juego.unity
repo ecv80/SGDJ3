@@ -793,6 +793,7 @@ MonoBehaviour:
   subiendo: 0
   tiempoInvulnerable: 0
   efectoInvulnerable: 0
+  detectorCerraduras: {fileID: 531708822}
 --- !u!61 &512342218
 BoxCollider2D:
   m_ObjectHideFlags: 0
