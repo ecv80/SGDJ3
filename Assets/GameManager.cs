@@ -43,6 +43,10 @@ public class GameManager : MonoBehaviour
     public Slider barraProgreso;
     public TextMeshProUGUI textoProgreso;
 
+    public ParteUI parte1;
+    public ParteUI parte2;
+    public ParteUI parte3;
+
     public bool gameOver=false;
 
     public static int nivel=1;
@@ -92,6 +96,9 @@ public class GameManager : MonoBehaviour
         texto=GameObject.Find("Texto").GetComponent<TextMeshProUGUI>();
         barraProgreso=GameObject.Find("Barra").GetComponent<Slider>();
         textoProgreso=GameObject.Find("Progreso").GetComponent<TextMeshProUGUI>();
+        parte1=GameObject.Find("Parte1").GetComponent<ParteUI>();
+        parte2=GameObject.Find("Parte2").GetComponent<ParteUI>();
+        parte3=GameObject.Find("Parte3").GetComponent<ParteUI>();
 
         transform.position=new Vector3(0f, 0f, -10f);
 
