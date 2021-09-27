@@ -99,8 +99,8 @@ public class GameManager : MonoBehaviour
         barraProgreso=GameObject.Find("Barra").GetComponent<Slider>();
         textoProgreso=GameObject.Find("Progreso").GetComponent<TextMeshProUGUI>();
         parte1=GameObject.Find("Parte1").GetComponent<ParteUI>();
-        parte2=GameObject.Find("Parte2").GetComponent<ParteUI>();
-        parte3=GameObject.Find("Parte3").GetComponent<ParteUI>();
+        // parte2=GameObject.Find("Parte2").GetComponent<ParteUI>();
+        // parte3=GameObject.Find("Parte3").GetComponent<ParteUI>();
 
         transform.position=new Vector3(0f, 0f, -10f);
 
@@ -339,6 +339,8 @@ public class GameManager : MonoBehaviour
             if (nivel>5)
                 if (Random.value<1f/20f) {
                     Instantiate<GameObject>(monoCabron, new Vector2(pos.x, pos.y+halfAlto+monoCabron.transform.localScale.y/2f), Quaternion.identity);
+                    //Si hay mono, no ponemos cerradura, para evitar situaciones complicadisimas. Ayyy dronjasdistoooo....
+                    continue;
                 }
 
             //Ponerle el cerrojo complementario que creará la UNIÓN
@@ -451,8 +453,8 @@ public class GameManager : MonoBehaviour
         }
         
         parte1.AsignaMatriz(matricesLlaves[0]);
-        parte2.AsignaMatriz(matricesLlaves[1]);
-        parte3.AsignaMatriz(matricesLlaves[2]);
+        // parte2.AsignaMatriz(matricesLlaves[1]);
+        // parte3.AsignaMatriz(matricesLlaves[2]);
     }
 
     void circularLista<T>(List<T> l, int posiciones=1) {

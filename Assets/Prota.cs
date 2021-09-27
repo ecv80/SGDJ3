@@ -27,6 +27,8 @@ public class Prota : MonoBehaviour
 
     public BoxCollider2D detectorCerraduras;
 
+    bool enganchado=false;
+
     float protaHalfAlto=0f;
 
     List<GameObject> eslabonesDisparo=new List<GameObject>();
@@ -76,9 +78,13 @@ public class Prota : MonoBehaviour
                         Parte parte=hits[i].transform.GetComponent<Parte>();
                         if (parte!=null &&
                             GameManager.instancia.SonComplementarias(parte.matriz, GameManager.instancia.matricesLlaves[0])) {
-                        matchAt=(Vector2)hits[i].transform.position+Vector2.up*.25f;
-                        match=true;
-                        StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), matchAt));
+                            matchAt=(Vector2)hits[i].transform.position+Vector2.up*0.25f;
+                            match=true;
+                            StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), matchAt));
+                        }
+                        else {
+                            enganchado=true;
+                            StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), (Vector2)hits[i].transform.position+Vector2.up*0.25f));
                         }
                     }
                 }
@@ -124,13 +130,20 @@ public class Prota : MonoBehaviour
             }
         }
 
+        GameObject garfiollave=Instantiate<GameObject>(GameManager.instancia.parte, destino-Vector2.up*0.25f, Quaternion.identity);
+        garfiollave.GetComponent<Parte>().AsignaMatriz(GameManager.instancia.matricesLlaves[0]);
+        eslabonesDisparo.Add(garfiollave);
+
         // print(contador+" eslabones.");
 
         //Si no hay match, destruir eslabones del disparo al cabo de un tiempo
         if (match)
             disparando=false;
         else {
-            Invoke("QuitaEslabones", .2f);
+            if (enganchado)
+                Invoke("QuitaEslabones", 2f);
+            else
+                Invoke("QuitaEslabones", .2f);
         }
 
         yield break;
@@ -202,6 +215,7 @@ public class Prota : MonoBehaviour
         eslabonesDisparo.Clear();
 
         disparando=false;
+        enganchado=false;
     }
 
     public IEnumerator EfectoInvulnerable () {
