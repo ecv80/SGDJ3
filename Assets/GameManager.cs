@@ -327,6 +327,9 @@ public class GameManager : MonoBehaviour
                 if (Random.value<1f/20f) {
                     Instantiate<GameObject>(monoCabron, new Vector2(pos.x, pos.y+halfAlto+monoCabron.transform.localScale.y/2f), Quaternion.identity);
                 }
+
+            //Ponerle el cerrojo complementario que creará la UNIÓN
+
                 
 
             //No vamos a reinstanciar indefinidamente las plataformas hasta dar con lugares donde no solapen a otras
@@ -373,6 +376,16 @@ public class GameManager : MonoBehaviour
         Poblar(cantidadPorPantalla, new Vector2(pos.x-xOffset, pos.y+yOffset)); //Arriba Izqda
         Poblar(cantidadPorPantalla, new Vector2(pos.x+xOffset, pos.y+yOffset)); //Arriba Dcha
 
+    }
+
+    bool[,] GenerarMatriz() {
+        //Genera una matriz aleatoria de 3x3 de bools
+        bool[,] matriz=new bool[3,3];
+        for (int i=0; i<matriz.GetLength(0); i++)
+            for (int j=0; j<matriz.GetLength(1); j++)
+                matriz[i,j]=Random.value<.5f?false:true;
+            
+        return matriz;
     }
 
     
