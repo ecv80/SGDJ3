@@ -46,8 +46,12 @@ public class Coco : MonoBehaviour
                 Destroy(gameObject);
             break;
             case "Prota":
-                if (GameManager.instancia.prota.efectoInvulnerable==false)
+                if (GameManager.instancia.prota.efectoInvulnerable==false && 
+                    GameManager.instancia.gameOver==false) {
                     GameManager.instancia.Fin(GameOver.Coco);
+                    //Quieto parao
+                    direccion=Vector2.zero;
+                }
             break;
             default:
             break;

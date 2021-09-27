@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject monoCabron;
     public GameObject plataforma;
+    public GameObject parte;
 
     float camZ;
 
@@ -231,7 +232,7 @@ public class GameManager : MonoBehaviour
         }
 
         //Ir al inicio
-        Invoke("Inicio", 2f);
+        Invoke("Inicio", 4f);
 
     }
 
@@ -329,7 +330,8 @@ public class GameManager : MonoBehaviour
                 }
 
             //Ponerle el cerrojo complementario que creará la UNIÓN
-
+            Parte part=Instantiate<GameObject>(parte, pos-Vector2.up*.25f, Quaternion.identity).GetComponent<Parte>();
+            part.AsignaMatriz(GenerarMatriz());
                 
 
             //No vamos a reinstanciar indefinidamente las plataformas hasta dar con lugares donde no solapen a otras

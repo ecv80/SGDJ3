@@ -59,6 +59,7 @@
      <Compile Include="Assets\Inicio.cs" />
      <Compile Include="Assets\InterludioMonoCabron.cs" />
      <Compile Include="Assets\MonoCabron.cs" />
+     <Compile Include="Assets\Parte.cs" />
      <Compile Include="Assets\Prota.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />

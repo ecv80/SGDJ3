@@ -535,6 +535,7 @@ MonoBehaviour:
     type: 3}
   plataforma: {fileID: 8345349855901765768, guid: 23dcd7ab408325e73a136cc2ea60d288,
     type: 3}
+  parte: {fileID: 5064674529434886842, guid: 01ffd0a82b0663f3e9b7b06de6f25598, type: 3}
   plataformasPorSubir: 0
   barraProgreso: {fileID: 0}
   textoProgreso: {fileID: 0}
