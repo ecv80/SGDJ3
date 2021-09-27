@@ -70,12 +70,16 @@ public class Prota : MonoBehaviour
                 int h = Physics2D.Raycast( mouseWorldPos, Vector2.zero, new ContactFilter2D().NoFilter(), hits);
                 bool collidersRelevantes=false;
                 for (int i=0; i<h; i++) {
-                    if (hits[i].collider.tag=="Plataforma") {
+                    if (hits[i].collider.tag=="Union") {
                         collidersRelevantes=true;
                         //Aquí irían comprobaciones de que es la plataforma correcta
-                        matchAt=hits[i].transform.position;
+                        Parte parte=hits[i].transform.GetComponent<Parte>();
+                        if (parte!=null &&
+                            GameManager.instancia.SonComplementarias(parte.matriz, GameManager.instancia.matricesLlaves[0])) {
+                        matchAt=(Vector2)hits[i].transform.position+Vector2.up*.25f;
                         match=true;
                         StartCoroutine(Dispara(new Vector2(transform.position.x, transform.position.y+transform.localScale.y/2f), matchAt));
+                        }
                     }
                 }
                 if (!collidersRelevantes) {//Disparo al aire

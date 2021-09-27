@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     static bool interludioMostrado=false;
 
-    List<bool[,]> matricesLlaves;
+    public List<bool[,]> matricesLlaves;
 
     //Aqui va el mapeado de pantallas des/pobladas con plataformas
     //Para agilizar codigo y rendimiento, podría hacerlo con un simple array bidimensional de bools, 
@@ -424,7 +424,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    bool SonComplementarias(bool[,] m1, bool[,] m2) {
+    public bool SonComplementarias(bool[,] m1, bool[,] m2) {
         //Hago esto porque generar una matriz complementaria y luego comprobar si son iguales,
         //tarda mas tiempo que comprobar directamente si son complementarias.
         //Que no? Y la interrupción de los loop? Piénsalo bien, piensa...
@@ -453,7 +453,6 @@ public class GameManager : MonoBehaviour
         parte1.AsignaMatriz(matricesLlaves[0]);
         parte2.AsignaMatriz(matricesLlaves[1]);
         parte3.AsignaMatriz(matricesLlaves[2]);
-        circularLista(matricesLlaves, 3);
     }
 
     void circularLista<T>(List<T> l, int posiciones=1) {
