@@ -398,6 +398,18 @@ public class GameManager : MonoBehaviour
         return matriz;
     }
 
+    bool SonIguales(bool[,] m1, bool[,] m2) { //Leer en tono de pregunta, con mucha tontería
+        if (m1.GetLength(0)!=m2.GetLength(0) || m1.GetLength(1)!=m2.GetLength(1))
+            return false;
+
+        for (int i=0; i<m1.GetLength(0); i++)
+            for (int j=0; j<m1.GetLength(1); j++)
+                if (m1[i,j]!=m2[i,j])
+                    return false;
+                
+        return true;
+    }
+
     
 
 }
