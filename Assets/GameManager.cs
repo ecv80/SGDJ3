@@ -435,6 +435,11 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+    public void GeneraGarfioLlaves(List<bool[,]> matrices) {
+        //Genera los garfios-llaves que encajarán con las cerraduras de las plataformas para crear uniones        
+
+    }
+
     
 
 }

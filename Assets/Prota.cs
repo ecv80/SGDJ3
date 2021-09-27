@@ -25,6 +25,8 @@ public class Prota : MonoBehaviour
     public float tiempoInvulnerable=0f;
     public bool efectoInvulnerable=false;
 
+    public BoxCollider2D detectorCerraduras;
+
     float protaHalfAlto=0f;
 
     List<GameObject> eslabonesDisparo=new List<GameObject>();
@@ -227,6 +229,18 @@ public class Prota : MonoBehaviour
             Destroy(other.gameObject);
     }
 
+    List<bool[,]> detectaCerraduras() {
+        List<bool[,]> cerraduras=new List<bool[,]>();
+        List<Collider2D> resultados=new List<Collider2D>();
+        detectorCerraduras.OverlapCollider(new ContactFilter2D().NoFilter(), resultados);
+        foreach(Collider2D col in resultados) {
+            if (col.tag=="Union") {
+                cerraduras.Add(col.GetComponent<Parte>().matriz);
+            }
+        }
+
+        return cerraduras;
+    }
 
     
 }
