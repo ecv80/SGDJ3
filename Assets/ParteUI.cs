@@ -17,15 +17,15 @@ using UnityEngine.UI;
 
 public class ParteUI : MonoBehaviour
 {
-    Image p00;
-    Image p01;
-    Image p02;
-    Image p10;
-    Image p11;
-    Image p12;
-    Image p20;
-    Image p21;
-    Image p22;
+    public Image p00;
+    public Image p01;
+    public Image p02;
+    public Image p10;
+    public Image p11;
+    public Image p12;
+    public Image p20;
+    public Image p21;
+    public Image p22;
 
     public bool[,] matriz; //Como de costumbre, respetando estrictamente las buenas
                             //prácticas de programación orientada a objetos ¬_¬
@@ -36,17 +36,17 @@ public class ParteUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Como esta no es un prefab, voy a asignar los "pixeles" aqui para evitar problemas
-        Transform marco=transform.Find("Marco");
-        p00=marco.GetChild(0).GetComponent<Image>();
-        p01=marco.GetChild(1).GetComponent<Image>();
-        p02=marco.GetChild(2).GetComponent<Image>();
-        p10=marco.GetChild(3).GetComponent<Image>();
-        p11=marco.GetChild(4).GetComponent<Image>();
-        p12=marco.GetChild(5).GetComponent<Image>();
-        p20=marco.GetChild(6).GetComponent<Image>();
-        p21=marco.GetChild(7).GetComponent<Image>();
-        p22=marco.GetChild(8).GetComponent<Image>();
+        // //Como esta no es un prefab, voy a asignar los "pixeles" aqui para evitar problemas
+        // Transform marco=transform.Find("Marco");
+        // p00=marco.GetChild(0).GetComponent<Image>();
+        // p01=marco.GetChild(1).GetComponent<Image>();
+        // p02=marco.GetChild(2).GetComponent<Image>();
+        // p10=marco.GetChild(3).GetComponent<Image>();
+        // p11=marco.GetChild(4).GetComponent<Image>();
+        // p12=marco.GetChild(5).GetComponent<Image>();
+        // p20=marco.GetChild(6).GetComponent<Image>();
+        // p21=marco.GetChild(7).GetComponent<Image>();
+        // p22=marco.GetChild(8).GetComponent<Image>();
     }
 
     // Update is called once per frame

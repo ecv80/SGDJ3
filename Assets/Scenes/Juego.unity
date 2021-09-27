@@ -461,6 +461,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843e66ebfd41ea10189b85e2c3008926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  p00: {fileID: 535635852}
+  p01: {fileID: 16292183}
+  p02: {fileID: 657341204}
+  p10: {fileID: 66765929}
+  p11: {fileID: 603161866}
+  p12: {fileID: 2089070671}
+  p20: {fileID: 1481598878}
+  p21: {fileID: 1470793649}
+  p22: {fileID: 1549721958}
 --- !u!1 &236787662
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,6 +971,7 @@ GameObject:
   m_Component:
   - component: {fileID: 531708821}
   - component: {fileID: 531708822}
+  - component: {fileID: 531708823}
   m_Layer: 0
   m_Name: DetectorCerraduras
   m_TagString: Untagged
@@ -1009,6 +1019,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 34, y: 8.5}
   m_EdgeRadius: 0
+--- !u!50 &531708823
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531708820}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &535635850
 GameObject:
   m_ObjectHideFlags: 0
@@ -2555,6 +2586,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843e66ebfd41ea10189b85e2c3008926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  p00: {fileID: 2912424851134811826}
+  p01: {fileID: 2912424851008457304}
+  p02: {fileID: 2912424850451626493}
+  p10: {fileID: 2912424852343096323}
+  p11: {fileID: 2912424852397292515}
+  p12: {fileID: 2912424852176712245}
+  p20: {fileID: 2912424852048059763}
+  p21: {fileID: 2912424851379231847}
+  p22: {fileID: 2912424850740420703}
 --- !u!1 &1807909293
 GameObject:
   m_ObjectHideFlags: 0
@@ -2680,6 +2720,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843e66ebfd41ea10189b85e2c3008926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  p00: {fileID: 1267235977}
+  p01: {fileID: 811099951}
+  p02: {fileID: 118638683}
+  p10: {fileID: 1807909295}
+  p11: {fileID: 666766732}
+  p12: {fileID: 1423747519}
+  p20: {fileID: 621164467}
+  p21: {fileID: 1878893269}
+  p22: {fileID: 1087924414}
 --- !u!1 &1878893267
 GameObject:
   m_ObjectHideFlags: 0

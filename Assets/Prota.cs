@@ -35,7 +35,6 @@ public class Prota : MonoBehaviour
     void Start()
     {
         protaHalfAlto=transform.localScale.y/2f;
-        
     }
 
     // Update is called once per frame
@@ -185,6 +184,9 @@ public class Prota : MonoBehaviour
             GameManager.instancia.Fin(GameOver.Ganado);
         }
 
+        //Actualizar garfio-llaves
+        GameManager.instancia.GeneraGarfioLlaves(DetectaCerraduras());
+
         match=false;
         subiendo=false;
         yield break;
@@ -229,7 +231,7 @@ public class Prota : MonoBehaviour
             Destroy(other.gameObject);
     }
 
-    List<bool[,]> detectaCerraduras() {
+    public List<bool[,]> DetectaCerraduras() {
         List<bool[,]> cerraduras=new List<bool[,]>();
         List<Collider2D> resultados=new List<Collider2D>();
         detectorCerraduras.OverlapCollider(new ContactFilter2D().NoFilter(), resultados);

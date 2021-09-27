@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
 
     static bool interludioMostrado=false;
 
+    List<bool[,]> matricesLlaves;
+
     //Aqui va el mapeado de pantallas des/pobladas con plataformas
     //Para agilizar codigo y rendimiento, podría hacerlo con un simple array bidimensional de bools, 
     //de 10mil x 10mil puesto que es improbable que el usuario llegue tan lejos. El problema es que
@@ -119,6 +121,9 @@ public class GameManager : MonoBehaviour
         barraProgreso.minValue=0;
         barraProgreso.maxValue=nivel;
         textoProgreso.text="0/"+nivel;
+
+        //Poner garfio-llaves
+        GeneraGarfioLlaves(prota.DetectaCerraduras());
 
         //Nivel
         gameOver=true; //bloquear
@@ -437,7 +442,25 @@ public class GameManager : MonoBehaviour
 
     public void GeneraGarfioLlaves(List<bool[,]> matrices) {
         //Genera los garfios-llaves que encajarán con las cerraduras de las plataformas para crear uniones        
+        //Acepta directamente cerraduras y genera las complementarias llaves
+        matricesLlaves=new List<bool[,]>();
 
+        foreach(bool[,] matriz in matrices) {
+            //Aleatorizar la lista a la par que introducimos los complementarios
+            matricesLlaves.Insert(Random.Range(0, matricesLlaves.Count), MatrizComplementaria(matriz));
+        }
+        
+        parte1.AsignaMatriz(matricesLlaves[0]);
+        parte2.AsignaMatriz(matricesLlaves[1]);
+        parte3.AsignaMatriz(matricesLlaves[2]);
+        circularLista(matricesLlaves, 3);
+    }
+
+    void circularLista<T>(List<T> l, int posiciones=1) {
+        //Circula una lista poniendo las primeras posiciones al final de la lista
+        for (int i=0; i<posiciones; i++)
+            l.Add(l[i]);
+        l.RemoveRange(0, posiciones);
     }
 
     
