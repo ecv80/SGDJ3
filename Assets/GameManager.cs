@@ -410,6 +410,22 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+    bool SonComplementarias(bool[,] m1, bool[,] m2) {
+        //Hago esto porque generar una matriz complementaria y luego comprobar si son iguales,
+        //tarda mas tiempo que comprobar directamente si son complementarias.
+        //Que no? Y la interrupción de los loop? Piénsalo bien, piensa...
+
+        if (m1.GetLength(0)!=m2.GetLength(0) || m1.GetLength(1)!=m2.GetLength(1))
+            return false;
+
+        for (int i=0; i<m1.GetLength(0); i++)
+            for (int j=0; j<m1.GetLength(1); j++)
+                if (m1[i,j]==m2[i,j])
+                    return false;
+                
+        return true;
+    }
+
     
 
 }
