@@ -27,6 +27,7 @@ public class Inicio : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.nivel=1;
         StartCoroutine(StartFlash());
     }
 

@@ -44,7 +44,9 @@ public class GameManager : MonoBehaviour
 
     public bool gameOver=false;
 
-    int nivel=1;
+    public static int nivel=1;
+
+    static bool interludioMostrado=false;
 
     //Aqui va el mapeado de pantallas des/pobladas con plataformas
     //Para agilizar codigo y rendimiento, podría hacerlo con un simple array bidimensional de bools, 
@@ -241,7 +243,14 @@ public class GameManager : MonoBehaviour
 
     void SiguienteNivel () {
         nivel++;
-        SceneManager.LoadScene("Juego");
+        if (nivel==6 && !interludioMostrado) {
+            interludioMostrado=true;
+            SceneManager.LoadScene("MonoCabron");
+            Destroy(Camera.main.gameObject);
+            Destroy(prota.gameObject);
+        }
+        else
+            SceneManager.LoadScene("Juego");
     }
 
     void Desbloquear() {
@@ -314,9 +323,10 @@ public class GameManager : MonoBehaviour
                 continue;
 
             //Poner a un mono cabron?
-            if (Random.value<1f/20f) {
-                Instantiate<GameObject>(monoCabron, new Vector2(pos.x, pos.y+halfAlto+monoCabron.transform.localScale.y/2f), Quaternion.identity);
-            }
+            if (nivel>5)
+                if (Random.value<1f/20f) {
+                    Instantiate<GameObject>(monoCabron, new Vector2(pos.x, pos.y+halfAlto+monoCabron.transform.localScale.y/2f), Quaternion.identity);
+                }
                 
 
             //No vamos a reinstanciar indefinidamente las plataformas hasta dar con lugares donde no solapen a otras
